@@ -4,17 +4,20 @@ import '../styles/Header.css'
 const Header = () => {
     const [inputValue, setInputValue] = useState('');
 
-    const onInput = (species) => {
-        setInputValue(species);
-        console.log('Input: ', species);
-    }
+    const onInput = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const onTitleClick = () => {
+        window.location.reload();
+    };
 
     return (
         <div className="Header">
-            <p>
+            <p onClick={onTitleClick} className="HeaderTitle">
                 Models Library
             </p>
-            <input type="text" placeholder="Type model species..." onInput={onInput}/>
+            <input type="text" placeholder="Type model species..." value={inputValue} onChange={onInput} className="HeaderInput"/>
         </div>
     );
 }

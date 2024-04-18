@@ -1,0 +1,33 @@
+table {
+    margin: 1% auto auto;
+    border: solid darkturquoise;
+    width: 77%;
+}
+
+th {
+    font-size: 30px;
+    border: solid darkturquoise;
+}
+
+tr {
+    font-size: 23px;
+}
+
+td {
+    text-align: center;
+    border: solid darkturquoise;
+}
+
+button {
+    font-size: 18px;
+}
+
+.hyperLink {
+    cursor: pointer;
+    color: blue;
+}
+
+td input{
+    width: 95%;
+    font-size: 23px;
+}
