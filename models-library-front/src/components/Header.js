@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import '../styles/Header.css'
+import {publish} from "../events";
 
 const Header = () => {
-    const [inputValue, setInputValue] = useState('');
-
     const onInput = (e) => {
-        setInputValue(e.target.value);
+        publish('filterSpecies', e.target.value);
     };
-
     const onTitleClick = () => {
         window.location.reload();
     };
@@ -17,7 +15,7 @@ const Header = () => {
             <p onClick={onTitleClick} className="HeaderTitle">
                 Models Library
             </p>
-            <input type="text" placeholder="Type model species..." value={inputValue} onChange={onInput} className="HeaderInput"/>
+            <input type="text" placeholder="Type model species..." onChange={onInput} className="HeaderInput"/>
         </div>
     );
 }

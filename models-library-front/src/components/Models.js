@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from 'axios';
 import '../styles/Models.css'
 
-const Models = () => {
+const Models = (props) => {
     const [initialModels, setInitialModels] = useState([{
         'id': 0,
         'species': 'example species',
@@ -53,16 +53,16 @@ const Models = () => {
             ))}
             <tr>
                 <td>
-                    <input type="text" placeholder="Species..." value={newSpecies}/>
+                    <input type="text" placeholder="Species..." defaultValue={newSpecies}/>
                 </td>
                 <td>
-                    <input type="text" placeholder="Colour..." value={newColour}/>
+                    <input type="text" placeholder="Colour..." defaultValue={newColour}/>
                 </td>
                 <td>
-                    <input type="number" value={firstAppearance}/>
+                    <input type="number" defaultValue={firstAppearance}/>
                 </td>
                 <td>
-                    <input type="number" value={newWeight}/>
+                    <input type="number" defaultValue={newWeight}/>
                 </td>
                 <td>
                     <button onClick={() => add()}>ADD</button>
