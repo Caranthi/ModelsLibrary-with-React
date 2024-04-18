@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import '../styles/Models.css'
 
@@ -16,6 +16,15 @@ const Models = (props) => {
     const [firstAppearance, setFirstAppearance] = useState(0);
     const [newWeight, setNewWeight] = useState(0);
 
+    useEffect(() => {
+        if (props.filteredSpecies !== '') {
+            setCurrentModels(initialModels.filter((model) => model.species.toUpperCase().includes(props.filteredSpecies.toUpperCase())));
+        }
+        else {
+            setCurrentModels(initialModels);
+        }
+    }, [props.filteredSpecies, initialModels]);
+
     const browseWikipedia = (species) => {
         console.log('Inside function');
         const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(species)}`;
@@ -31,13 +40,13 @@ const Models = (props) => {
     return (
         <table>
             <thead>
-                <tr>
-                    <th>Species</th>
-                    <th>Colour</th>
-                    <th>First Appearance</th>
-                    <th>Weight [g]</th>
-                    <th>Context action</th>
-                </tr>
+            <tr>
+                <th>Species</th>
+                <th>Colour</th>
+                <th>First Appearance</th>
+                <th>Weight [g]</th>
+                <th>Context action</th>
+            </tr>
             </thead>
             <tbody>
             {currentModels.map((model, index) => (
