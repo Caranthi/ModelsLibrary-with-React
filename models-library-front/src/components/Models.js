@@ -3,24 +3,43 @@ import axios from 'axios';
 import '../styles/Models.css'
 
 const Models = (props) => {
-    const [initialModels, setInitialModels] = useState([{
-        'id': 0,
-        'species': 'example species',
-        'colour': 'black',
-        'firstAppearance': 2021,
-        'weight': 213
-    }]);
+    const [initialModels, setInitialModels] = useState([]);
     const [currentModels, setCurrentModels] = useState(initialModels);
     const [newSpecies, setNewSpecies] = useState('');
     const [newColour, setNewColour] = useState('');
     const [firstAppearance, setFirstAppearance] = useState(0);
     const [newWeight, setNewWeight] = useState(0);
+    const [initialSpecies, setInitialSpecies] = useState(['Blue Whale', 'Tiger Shark', 'Humpback Whale']);
+    const [initialColours, setInitialColours] = useState(['Blue', 'Green', 'Black']);
+    const [initialAppearances, setInitialAppearances] = useState([2021, 2021, 2022]);
+    const [initialWeights, setInitialWeights] = useState([172, 86, 242]);
 
     useEffect(() => {
         axios.get('http://localhost:8080/').then((response) => {
             console.log('Models: ', response.data);
             setInitialModels(response.data);
-            // setCurrentModels(initialModels);
+
+            if (response.data.length === 0) {
+                for (let i = 0; i < initialSpecies.length; i++) {
+                    let modelData = {
+                        species: initialSpecies[i], colour: initialColours[i], firstAppearance: initialAppearances[i],
+                        weight: initialWeights[i]
+                    };
+
+                    axios.post('http://localhost:8080/', modelData).then((response) => {
+                        console.log('Added model: ', response.data);
+                    }).then(() => {
+                        axios.get('http://localhost:8080/').then((response) => {
+                            console.log('Initial Models: ', response.data);
+                            setInitialModels(response.data);
+                        });
+                    }).catch(error => {
+                        console.error('ERROR: ', error);
+                    });
+                }
+            }
+        }).catch(error => {
+            console.error('ERROR: ', error);
         });
     }, []);
     useEffect(() => {
@@ -59,7 +78,7 @@ const Models = (props) => {
         setNewWeight(0);
     };
     const onSpeciesInput = (e) => {
-      setNewSpecies(e.target.value);
+        setNewSpecies(e.target.value);
     }
     const onColourInput = (e) => {
         setNewColour(e.target.value);
