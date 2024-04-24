@@ -54,10 +54,21 @@ const Models = (props) => {
         console.log('Inside function');
         const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(species)}`;
         window.open(searchURL, '_blank');
-    }
+    };
     const deleteModel = (id) => {
+        axios.delete(`http://localhost:8080/${id}`).then((response) => {
+            console.log(response.data);
 
-    }
+            axios.get('http://localhost:8080/').then((response) => {
+                console.log('Models: ', response.data);
+                setCurrentModels(response.data);
+            }).catch(error => {
+                console.log('ERROR: ', error);
+            });
+        }).catch(error => {
+            console.log('ERROR: ', error);
+        })
+    };
     const add = () => {
         let modelData = {species: newSpecies, colour: newColour, firstAppearance: firstAppearance, weight: newWeight};
 
@@ -67,15 +78,12 @@ const Models = (props) => {
             axios.get('http://localhost:8080/').then((response) => {
                 console.log('Models: ', response.data);
                 setCurrentModels(response.data);
+
+                window.location.reload();
             });
         }).catch(error => {
             console.error('ERROR: ', error);
         });
-
-        setNewSpecies('');
-        setNewColour('');
-        setFirstAppearance(0);
-        setNewWeight(0);
     };
     const onSpeciesInput = (e) => {
         setNewSpecies(e.target.value);
