@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Header from "./Header";
 import Models from "./Models";
 import {subscribe} from "../events";
+import InitialPopup from "./InitialPopup";
 
 const ModelsLibrary = () =>
 {
@@ -16,6 +17,7 @@ const ModelsLibrary = () =>
 
     return(
         <div>
+            <InitialPopup/>
             <Header/>
             <Models filteredSpecies={filteredSpecies}/>
         </div>

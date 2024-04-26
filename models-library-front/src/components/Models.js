@@ -9,10 +9,10 @@ const Models = (props) => {
     const [newColour, setNewColour] = useState('');
     const [firstAppearance, setFirstAppearance] = useState(0);
     const [newWeight, setNewWeight] = useState(0);
-    const [initialSpecies, setInitialSpecies] = useState(['Blue Whale', 'Tiger Shark', 'Humpback Whale']);
-    const [initialColours, setInitialColours] = useState(['Blue', 'Green', 'Black']);
-    const [initialAppearances, setInitialAppearances] = useState([2021, 2021, 2022]);
-    const [initialWeights, setInitialWeights] = useState([172, 86, 242]);
+    const initialSpecies = ['Blue Whale', 'Tiger Shark', 'Humpback Whale'];
+    const initialColours = ['Blue', 'Green', 'Black'];
+    const initialAppearances = [2021, 2021, 2022];
+    const initialWeights = [172, 86, 242];
 
     useEffect(() => {
         axios.get('http://localhost:8080/').then((response) => {

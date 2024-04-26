@@ -11,10 +11,10 @@ th {
 
 tr {
     font-size: 23px;
+    text-align: center;
 }
 
 td {
-    text-align: center;
     border: solid darkturquoise;
 }
 
@@ -28,6 +28,6 @@ button {
 }
 
 td input{
-    width: 95%;
+    width: 100%;
     font-size: 23px;
 }
