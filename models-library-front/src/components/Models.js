@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import axios from 'axios';
 import '../styles/Models.css'
 import {publish} from "../events";
@@ -14,6 +14,11 @@ const Models = (props) => {
     const initialColours = ['Blue', 'Green', 'Black'];
     const initialAppearances = [2021, 2021, 2022];
     const initialWeights = [172, 86, 242];
+
+    const speciesInput = useRef(null);
+    const colourInput = useRef(null);
+    const appearanceInput = useRef(null);
+    const weightInput = useRef(null);
 
     useEffect(() => {
         axios.get('http://localhost:8080/').then((response) => {
@@ -54,7 +59,6 @@ const Models = (props) => {
     }, [props.filteredSpecies, initialModels]);
 
     const browseWikipedia = (species) => {
-        console.log('Inside function');
         const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(species)}`;
         window.open(searchURL, '_blank');
     };
@@ -84,7 +88,7 @@ const Models = (props) => {
                 console.log('Models: ', response.data);
                 setCurrentModels(response.data);
 
-                window.location.reload();
+                clearInputs();
             });
         }).catch(error => {
             console.error('ERROR: ', error);
@@ -102,6 +106,12 @@ const Models = (props) => {
     }
     const onWeightInput = (e) => {
         setNewWeight(e.target.value);
+    }
+    const clearInputs = () => {
+        speciesInput.current.value = '';
+        colourInput.current.value = '';
+        appearanceInput.current.value = 0;
+        weightInput.current.value = 0;
     }
 
     return (
@@ -129,16 +139,16 @@ const Models = (props) => {
             ))}
             <tr>
                 <td>
-                    <input type="text" placeholder="Species..." defaultValue={newSpecies} onInput={onSpeciesInput}/>
+                    <input type="text" placeholder="Species..." defaultValue={newSpecies} onInput={onSpeciesInput} ref={speciesInput}/>
                 </td>
                 <td>
-                    <input type="text" placeholder="Colour..." defaultValue={newColour} onInput={onColourInput}/>
+                    <input type="text" placeholder="Colour..." defaultValue={newColour} onInput={onColourInput} ref={colourInput}/>
                 </td>
                 <td>
-                    <input type="number" defaultValue={firstAppearance} onInput={onAppearanceInput}/>
+                    <input type="number" defaultValue={firstAppearance} onInput={onAppearanceInput} ref={appearanceInput}/>
                 </td>
                 <td>
-                    <input type="number" defaultValue={newWeight} onInput={onWeightInput}/>
+                    <input type="number" defaultValue={newWeight} onInput={onWeightInput} ref={weightInput}/>
                 </td>
                 <td>
                     <button onClick={() => add()}>ADD</button>
