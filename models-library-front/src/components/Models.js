@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import '../styles/Models.css'
+import {publish} from "../events";
 
 const Models = (props) => {
     const [initialModels, setInitialModels] = useState([]);
@@ -35,11 +36,13 @@ const Models = (props) => {
                         });
                     }).catch(error => {
                         console.error('ERROR: ', error);
+                        publish('error', error.response.data);
                     });
                 }
             }
         }).catch(error => {
             console.error('ERROR: ', error);
+            publish('error', error.response.data);
         });
     }, []);
     useEffect(() => {
@@ -64,9 +67,11 @@ const Models = (props) => {
                 setCurrentModels(response.data);
             }).catch(error => {
                 console.log('ERROR: ', error);
+                publish('error', error.response.data);
             });
         }).catch(error => {
             console.log('ERROR: ', error);
+            publish('error', error.response.data);
         })
     };
     const add = () => {
@@ -83,6 +88,7 @@ const Models = (props) => {
             });
         }).catch(error => {
             console.error('ERROR: ', error);
+            publish('error', error.response.data);
         });
     };
     const onSpeciesInput = (e) => {
@@ -111,7 +117,7 @@ const Models = (props) => {
             </thead>
             <tbody>
             {currentModels.map((model, index) => (
-                <tr>
+                <tr key={model.id}>
                     <td onClick={() => browseWikipedia(model.species)} className="hyperLink">{model.species}</td>
                     <td>{model.colour}</td>
                     <td>{model.firstAppearance}</td>

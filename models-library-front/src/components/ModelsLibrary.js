@@ -3,23 +3,29 @@ import Header from "./Header";
 import Models from "./Models";
 import {subscribe} from "../events";
 import InitialPopup from "./InitialPopup";
+import ErrorForm from "./ErrorForm";
 
-const ModelsLibrary = () =>
-{
+const ModelsLibrary = () => {
     const [filteredSpecies, setFilteredSpecies] = useState('');
+    const [error, setError] = useState('');
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         subscribe('filterSpecies', (data) => {
             setFilteredSpecies(data.detail);
         })
     });
+    useEffect(() => {
+        subscribe('error', (data) => {
+            setError(data.detail);
+        });
+    });
 
-    return(
+    return (
         <div>
             <InitialPopup/>
             <Header/>
             <Models filteredSpecies={filteredSpecies}/>
+            <ErrorForm error={error}/>
         </div>
     )
 }
