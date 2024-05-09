@@ -86,7 +86,7 @@ const Models = (props) => {
 
             axios.get('http://localhost:8080/').then((response) => {
                 console.log('Models: ', response.data);
-                setCurrentModels(response.data);
+                setInitialModels(response.data);
 
                 clearInputs();
             });

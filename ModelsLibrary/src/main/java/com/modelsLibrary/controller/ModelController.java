@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class ModelController {
@@ -27,10 +28,10 @@ public class ModelController {
 
     @PostMapping("/")
     public ResponseEntity<String> createModel(@Valid @RequestBody Model model) {
-        if (model.getSpecies() == "") {
+        if (Objects.equals(model.getSpecies(), "")) {
             return ResponseEntity.badRequest().body("Species cannot be empty!");
         }
-        if (model.getColour() == "") {
+        if (Objects.equals(model.getColour(), "")) {
             return ResponseEntity.badRequest().body("Colour cannot be empty!");
         }
         if (model.getWeight() <= 0) {

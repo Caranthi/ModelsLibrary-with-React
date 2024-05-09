@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import '../styles/ErrorForm.css';
+import {publish} from "../events";
 const ErrorForm = (props) => {
     const [isShown, setIsShown] = useState(false);
 
     const closeError = () => {
         console.log('Error closed');
+        publish('error', '');
         setIsShown(false);
     }
 
